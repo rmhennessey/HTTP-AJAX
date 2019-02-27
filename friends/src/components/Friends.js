@@ -22,8 +22,28 @@ export default class Friends extends React.Component {
   
   render() {
     return (
-        <div className="friends-list">
-            {this.state.friends.map(friend => <Friend friend={friend} />)}
+       <div className="container">
+            <form>
+                <input 
+                type='text'
+                placeholder='name'
+                name='nameField'
+                />
+                 <input 
+                type='text'
+                placeholder='age'
+                name='ageField'
+                />
+                 <input 
+                type='text'
+                placeholder='email'
+                name='emailField'
+                />
+                <button>Save Friend</button>
+            </form>
+            <div className="friends-list">
+                {this.state.friends.map(friend => <Friend friend={friend} />)}
+            </div>
         </div>
     );
   }
