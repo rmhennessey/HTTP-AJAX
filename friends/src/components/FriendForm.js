@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
 export default class FriendForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state={
-            friend: {
+            friend: this.props.activeFriend || {
                 name: '',
                 age: '',
                 email: ''
@@ -13,9 +13,16 @@ export default class FriendForm extends Component {
 
     }
 
-    componentDidMount() {
-
-    }
+    componentDidUpdate(prevProps) {
+        if(
+            this.props.activeFriend &&
+            prevProps.activeFriend !== this.props.activeFriend
+        ) {
+            this.setState({
+                friend: this.props.activeFriend
+            })
+        }
+     }
 
     changeHandler = e => {
         e.persist();
@@ -27,8 +34,9 @@ export default class FriendForm extends Component {
         }))
     };
 
-    handleSubmit = (e, friend) => {
-        this.props.addFriend(e, friend)
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.addFriend(this.state.friend)
     }
 
 

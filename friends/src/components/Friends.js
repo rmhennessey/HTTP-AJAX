@@ -7,7 +7,8 @@ export default class Friends extends React.Component {
     constructor() {
         super();
         this.state= {
-        friends: []
+            activeFriend: null,
+            friends: []
     };
 }
 
@@ -21,9 +22,8 @@ componentDidMount() {
         .catch(error => console.log(error));
     }
 
-    addFriend = (e, friend) => {
+    addFriend = (friend) => {
         console.log(friend)
-        e.preventDefault();
         axios
             .post('http://localhost:5000/friends', friend)
             .then(response => {
@@ -43,6 +43,12 @@ componentDidMount() {
             .catch(error => {console.log(error)});
     };
 
+    setUpdateForm = (e, friend) => {
+        console.log(friend)
+        e.preventDefault();
+        this.setState({ activeFriend: friend})
+    }
+    
     updateFriend = (e, friend) => {
         e.preventDefault();
         axios
@@ -60,9 +66,9 @@ componentDidMount() {
     render() {
     return (
         <div className="container">
-            <FriendForm addFriend={this.addFriend} /> 
+            <FriendForm addFriend={this.addFriend} updateFriend={this.updateFriend} activeFriend={this.state.activeFriend} /> 
             <div className="friends-list">
-                {this.state.friends.map(friend => <Friend key={friend.id} friend={friend} deleteFriend={this.deleteFriend} />)}
+                {this.state.friends.map(friend => <Friend key={friend.id} friend={friend} deleteFriend={this.deleteFriend} setUpdateForm={this.setUpdateForm} />)}
             </div>
         </div>
     );
